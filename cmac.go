@@ -21,7 +21,7 @@ timing side-channels:
 		return cmac.Equal(messageMAC, expectedMAC)
 	}
 */
-package cmac
+package main
 
 import (
 	"crypto/cipher"

@@ -1,4 +1,4 @@
-package cmac
+package main
 
 import (
 	"bytes"
