@@ -67,7 +67,7 @@ K1 and K2 have the size of a block and are computed as follow:
             else    K2 := (K1 << 1) XOR const_Rb;
 */
 
-type cmac struct {
+type main struct {
 	blockSize   int
 	mac, k1, k2 []byte
 	cipher      cipher.Block
@@ -83,7 +83,7 @@ func New(newCipher NewCipherFunc, key []byte) (hash.Hash, error) {
 		return nil, err
 	}
 	var bs = c.BlockSize()
-	var cm = new(cmac)
+	var cm = new(main)
 	cm.blockSize = bs
 	cm.mac = make([]byte, 3*bs)
 	cm.k1, cm.k2 = cm.mac[bs:2*bs], cm.mac[2*bs:]
@@ -103,9 +103,9 @@ func New(newCipher NewCipherFunc, key []byte) (hash.Hash, error) {
 	return cm, nil
 }
 
-func (c *cmac) Size() int { return c.blockSize }
+func (c *main) Size() int { return c.blockSize }
 
-func (c *cmac) BlockSize() int { return c.blockSize }
+func (c *main) BlockSize() int { return c.blockSize }
 
 func shiftLeftOneBit(dst, src []byte) {
 	var overflow byte
@@ -116,7 +116,7 @@ func shiftLeftOneBit(dst, src []byte) {
 	}
 }
 
-func (c *cmac) Write(m []byte) (n int, err error) {
+func (c *main) Write(m []byte) (n int, err error) {
 	n = len(m)
 	for len(m) > c.blockSize {
 		for i := range c.mac {
@@ -142,12 +142,12 @@ func (c *cmac) Write(m []byte) (n int, err error) {
 	return
 }
 
-func (c *cmac) Sum(in []byte) []byte {
+func (c *main) Sum(in []byte) []byte {
 	return append(in, c.mac...)
 }
 
 // Reset the the CMAC
-func (c *cmac) Reset() {
+func (c *main) Reset() {
 	for i := range c.mac {
 		c.mac[i] = 0
 	}

@@ -16,7 +16,7 @@ func TestCMAC(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	tmp := cm.(*cmac)
+	tmp := cm.(*main)
 	if !bytes.Equal(tmp.k1, k1) {
 		t.Errorf("k1 mismatch, got \n   %+v\nexpected\n   %+v", tmp.k1, k1)
 	}
